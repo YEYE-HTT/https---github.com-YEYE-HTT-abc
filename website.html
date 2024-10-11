@@ -1,0 +1,119 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情</title>
+    <link rel="stylesheet" href="product.css">
+</head>
+<body>
+    <section id="product-details">
+        <h2 id="details-name"></h2>
+        <img id="details-image" src="" alt="商品图片" width="300" height="300">
+        <p id="details-description"></p>
+        <p id="details-price"></p>
+        <button onclick="goBack()">返回</button>
+    </section>
+
+    <script>
+        const products = [
+            { name: "商品1", image: "1.jpg", description: "这是商品1的详细描述。", price: "$100" },
+            { name: "商品2", image: "2.jpg", description: "这是商品2的详细描述。", price: "$150" },
+            { name: "商品3", image: "3.jpg", description: "这是商品3的详细描述。", price: "$200" },
+            { name: "商品4", image: "4.png", description: "这是商品4的详细描述。", price: "$400" }
+        ];
+
+        // 获取 URL 中的参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const productIndex = urlParams.get('product');  // 获取 'product' 参数
+
+        // 获取相应的商品
+        const product = products[productIndex];
+
+        // 如果商品存在，则显示商品详情
+        if (product) {
+            document.getElementById('details-name').innerText = product.name;
+            document.getElementById('details-image').src = product.image;
+            document.getElementById('details-description').innerText = product.description;
+            document.getElementById('details-price').innerText = product.price;
+        } else {
+            // 如果没有找到商品，显示错误信息
+            document.getElementById('details-name').innerText = "未找到商品";
+            document.getElementById('details-description').innerText = "无法加载商品详情。";
+        }
+
+        // 返回到商品列表页面
+        function goBack() {
+            window.location.href = 'index.html';  // 返回主页面
+        }
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品展示</title>
+    <link rel="stylesheet" href="product.css"> <!-- CSS样式 -->
+</head>
+<body>
+
+    <section id="product-list"></section> <!-- 商品列表的容器 -->
+
+    <section id="product-details" style="display:none;"> <!-- 隐藏的商品详情容器 -->
+        <h2 id="details-name"></h2>
+        <img id="details-image" src="" alt="商品图片" width="300" height="300">
+        <p id="details-description"></p>
+        <p id="details-price"></p>
+        <button onclick="goBack()">return</button>
+    </section>
+
+    <script>
+        const products = [
+            { name: "商品1", image: "1.jpg", description: "这是商品1的详细描述。", price: "$100" },
+            { name: "商品2", image: "2.jpg", description: "这是商品2的详细描述。", price: "$150" },
+            { name: "商品3", image: "3.jpg", description: "这是商品3的详细描述。", price: "$200" },
+            { name: "商品4", image: "4.png", description: "这是商品4的详细描述。", price: "$400" }
+
+        ];
+
+        // 生成商品列表
+        window.onload = function() {
+            const productList = document.getElementById('product-list');
+            
+            products.forEach((product, index) => {
+                const article = document.createElement('article');
+                article.className = 'product';
+
+                article.innerHTML = `
+                    <h2 class="product-name">${product.name}</h2>
+                    <img src="${product.image}" alt="${product.name}图片" width="300" height="300">
+                    <p class="product-price">${product.price}</p>
+                    <button onclick="showDetails(${index})">查看详情</button>
+                `;
+                
+                productList.appendChild(article);
+            });
+        };
+
+        // 点击查看详情，显示详细信息
+        function showDetails(index) {
+            const product = products[index];
+            document.getElementById('details-name').innerText = product.name;
+            document.getElementById('details-image').src = product.image;
+            document.getElementById('details-description').innerText = product.description;
+            document.getElementById('details-price').innerText = product.price;
+
+            document.getElementById('product-list').style.display = 'none'; // 隐藏商品列表
+            document.getElementById('product-details').style.display = 'block'; // 显示商品详情
+        }
+
+        // 返回商品列表
+        function goBack() {
+            document.getElementById('product-list').style.display = 'block';
+            document.getElementById('product-details').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
