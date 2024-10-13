@@ -6,7 +6,6 @@ body {
 }
 #banner {
     height: 13%;
-    /* border-style:solid; */
     box-sizing: border-box;
     display: flex;
     position: relative;
@@ -18,27 +17,31 @@ body {
 /* 设置页面顶部的横幅区域，没有直接处理字体的样式 */
 
 #logo {
-    /* width: 33%; */
-    /* border-style:solid; */
     box-sizing: border-box;
     flex: none; 
-    /* 禁止 logo 元素根据父容器的空间进行拉伸或收缩 */
     height: 80%; 
-    /* 设置 logo 的高度为父容器高度的 80% */
     margin-left: 20px;
-    /* 给 logo 添加左侧的外边距，增加与其他元素的间距 */
 }
+/* 禁止 logo 元素根据父容器的空间进行拉伸或收缩 */
+/* 设置 logo 的高度为父容器高度的 80% */
+/* 给 logo 添加左侧的外边距，增加与其他元素的间距 */
 
-
-#menu {
+/* #menu {
     width: 35%;
     height: 100%;
-    /* border-style:solid; */
     box-sizing: border-box;
     margin-left: 20px;
     flex: none;
-    /* 页面顶部的横幅区域调整menu */
+} */
+
+#menu {
+    width: 30%;
+    height: auto;
+    box-sizing: border-box;
+    margin-left: 0;
+    flex: 20px;
 }
+ /* 页面顶部的横幅区域调整menu */
 
 .singleMenu {
     width: 25%;
@@ -47,32 +50,34 @@ body {
     box-sizing: border-box;
     background-image: linear-gradient(#FF1493, #FF1493);
     background-repeat: no-repeat;
-    transition: background-size 0.2s;
+    transition: background-size 0.2s, background-color 0.2s;
     background-size: 100% 0%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #FF0000 ;
-    font-size: 17pt;
+    font-size: 25pt;
     font-family: "Arimo", sans-serif;
-    /* font-optical-sizing: auto; */
     font-weight: 600;
     background-color: white;
     letter-spacing: -0.5px;
     text-decoration: none;
+    padding:10px 0;
 }
+    /* font-optical-sizing: auto; */
+
 /* menu 绿色的范围 和背景颜色 */
 
 
 .singleMenu:hover, .singleMenu:focus {
     background-size: 100% 100%;
     text-shadow: 1px 1px 2px whitesmoke;
-    font-size: 19pt;
+    font-size: 25pt;
     text-decoration: underline whitesmoke;
     text-underline-offset: 10%;
-    text-decoration-thickness: 5px;
-    /* text-shadow: 2px 0 0 #1a4d1b, 0 2px 0 #1a4d1b, -2px 0 0 #1a4d1b, 0 -2px 0 #1a4d1b, 2px 2px 0 #1a4d1b, -2px 2px 0 #1a4d1b, 2px -2px 0 #1a4d1b, -2px -2px 0 #1a4d1b; */
+    text-decoration-thickness: 10px;
 }
+    /* text-shadow: 2px 0 0 #1a4d1b, 0 2px 0 #1a4d1b, -2px 0 0 #1a4d1b, 0 -2px 0 #1a4d1b, 2px 2px 0 #1a4d1b, -2px 2px 0 #1a4d1b, 2px -2px 0 #1a4d1b, -2px -2px 0 #1a4d1b; */
 
 .selected {
     text-decoration: underline #FF1493;
@@ -80,6 +85,90 @@ body {
     text-decoration-thickness: 5px;
 }
 /* menu underline */
+
+       /* Top Sales 区域样式 */
+.top-sales {
+        text-align: left;  
+        padding: 40px;
+        background-color: #f5f5f5;  
+        border-bottom: 2px solid #ddd; 
+}
+
+.top-sales h2 {
+        font-size: 24px;
+        margin: 0;
+        color: #333;
+}
+
+.top-sales-item {
+    display: flex;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;          
+}
+
+.left-content {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;   
+    justify-content: flex-start; 
+    width:50%;
+    margin-right: 0px;     
+}
+
+.top-sales-image{
+        max-width:250px;
+        margin-right:40px;
+        border-radius:10px;
+}
+
+.top-sales-link {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom:20px;
+    padding: 10px 20px;
+    background-color: #e67e22;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+/* 悬停时 Top Sales 链接的样式 */
+.top-sales-link:hover {
+    background-color: #d35400;
+}
+
+.right-content {
+    width: 50%;           
+    text-align: left;      
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 描述文字样式 */
+.right-content h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.right-content p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.top-sales-price {
+    font-size: 18px;
+    color: #e67e22;
+    font-weight: bold;
+}
 
 #slogan {
     width: 100%;
@@ -98,6 +187,97 @@ body {
     color: #FF0000 ;
     margin-right: 25px;
 }
+
+
+/* 整体布局，使用 flex 布局将侧边栏和商品列表并排 */
+#layout {
+    display: flex;
+    align-items: stretch;  /* 确保两侧（Tab 栏和商品列表）高度一致 */
+}
+
+/* 侧边栏（Tab 栏）样式 */
+#sidebar {
+    width: 200px; 
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start;  
+    height: 100%; 
+}
+
+#sidebar .tab {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #333;
+    background-color: #e67e22; 
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+#sidebar .tab:hover {
+    background-color: #d35400;
+    color: white;
+}
+
+/* 商品列表区域 */
+#product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 每行 3 列商品 */
+    gap: 20px; /* 商品之间的间距 */
+    padding: 20px;
+    flex-grow: 1; /* 商品列表区域自适应剩余空间 */
+}
+
+/* 单个商品样式 */
+.product {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+/* 鼠标悬停时的商品样式 */
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 商品名称样式 */
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* 商品图片样式 */
+.product img {
+    max-width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* 商品价格样式 */
+.product-price {
+    font-size: 16px;
+    color: #e67e22;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+
+
+
+
+
 
 #trigger-modal {
     margin-right: 25px;
@@ -415,9 +595,15 @@ body {
         height: 40px; /* 缩小 logo 尺寸以适应手机屏幕 */
     }
 
+    /* #menu {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+    } */
+    /* 导航栏在手机上垂直排列 */
     #menu {
         display: flex;
-        flex-direction: column; /* 导航栏在手机上垂直排列 */
+        flex-direction: column; 
         align-items: center;
     }
 

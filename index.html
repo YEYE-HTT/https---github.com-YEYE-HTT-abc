@@ -12,32 +12,8 @@
         rel="stylesheet">
     <script src="https://kit.fontawesome.com/1c4b2b8f9d.js" crossorigin="anonymous"></script>
 
-    <style>
-        #product-list{
-            display:flex;
-            flex-wrap:wrap;
-            justify-content: space-between;
-            padding:20px
-        }
-        .product{
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px;
-            width: 45%;
-            box-sizing:border-box;
-            text-align:center;
-        }
-        .product img{
-            max-width:100%;
-            height:auto;
-        }
-        #product-details{
-            padding:20px;
-        }
-    </style>
-
 </head>
+
 
 <body>
     <header id='banner'>
@@ -48,7 +24,7 @@
             <a href="#" class="singleMenu">Men</a>
             <a href="#" class="singleMenu">Contact</a>
         </nav>
-        <p id='slogan'>Earn Your Commission From Today</p>
+        <!-- <p id='slogan'>Earn Your Commission From Today</p> -->
         <a href="#" id="trigger-modal">Register</a>
     </header>
     <main id='main'>
@@ -83,26 +59,59 @@
         });
     </script>
 
+    <!-- Top Sales 区域 -->
 
-    <section id = "product-list"></section>
-    <section id = "product-details" style = "display:none;">
-        <h2 id = "details-name"></h2>
-        <img id = "details-image" src=""alt = "商品图片" width ="300" height ="300">
-        <p id = "details-description"></p>
-        <p id = "details-price"></p>
-        <button onclick="goBack()" >return</button>
+    <section id="top-sales">
+        <h2>Top Sales / Top Commission</h2>
+    
+        <div class="top-sales-item">
+            <div class="left-content">
+                <img src="1.jpg" alt="Top Sales product" class="top-sales-image">
+                <a href="website.html" class="top-sales-link">xxxx.link</a>
+            </div>
+
+            <div class="right-content">
+                <h3>Small Box</h3>
+                <p>A sleek, elegant box crafted from premium materials. Perfect for storing jewelry or small items with style. 
+                    Compact, practical, and versatile—ideal for home or travel.</p>
+                <p class="top-sales-price">$250</p>
+            </div>
+        </div>
     </section>
+    
+
+    <div id="layout">
+        <nav id="sidebar"></nav>
+        <section id = "product-list"></section>
+        <section id = "product-details" style = "display:none;">
+            <h2 id = "details-name"></h2>
+            <img id = "details-image" src=""alt = "商品图片" width ="300" height ="300">
+            <p id = "details-description"></p>
+            <p id = "details-price"></p>
+            <button onclick="goBack()" >return</button>
+        </section>
+
+    </div>
+
 
     <script>
         const products = [
-            { name: "商品1", image: "1.jpg", description: "这是商品1的详细描述。", price: "$100" },
-            { name: "商品2", image: "2.jpg", description: "这是商品2的详细描述。", price: "$150" },
-            { name: "商品3", image: "3.jpg", description: "这是商品3的详细描述。", price: "$200" },
-            { name: "商品4", image: "4.png", description: "这是商品4的详细描述。", price: "$400" }
+            { name: "Small box1", image: "1.jpg", description: "这是商品1的详细描述。", price: "$100" },
+            { name: "Small box2", image: "2.jpg", description: "这是商品2的详细描述。", price: "$150" },
+            { name: "Small box3", image: "3.jpg", description: "这是商品3的详细描述。", price: "$200" },
+            { name: "Small box4", image: "4.jpg", description: "这是商品4的详细描述。", price: "$400" },
+            { name: "Small box5", image: "1.jpg", description: "这是商品5的详细描述。", price: "$200" },
+            { name: "Small box6", image: "2.jpg", description: "这是商品6的详细描述。", price: "$400" }
         ];
-        // 生成商品列表
     window.onload = function() {
         const productList = document.getElementById('product-list');
+        const sidebar=document.getElementById('sidebar');
+
+        const categoryNote = document.createElement('h2');
+        categoryNote.textContent = "类目"; 
+        categoryNote.style.textAlign = 'center';  
+        categoryNote.style.marginBottom = '20px'; 
+        sidebar.appendChild(categoryNote);
         
         products.forEach((product, index) => {
             const article = document.createElement('article');
@@ -117,45 +126,33 @@
             
             productList.appendChild(article);
         });
+        setTimeout(() => {
+            const productListHeight = productList.offsetHeight;
+            console.log('Product list total height:', productListHeight);
+
+            // 每个 Tab 对应 100px 的高度
+            const tabHeight = 100;
+            const numberOfTabs = Math.ceil(productListHeight / tabHeight);
+            console.log('Number of tabs to generate:', numberOfTabs);
+
+            // 生成对应数量的 Tab
+            for (let i = 0; i < numberOfTabs; i++) {
+                const tab = document.createElement('a');
+                tab.className = 'tab';
+                tab.href = `#tab${i}`;
+                tab.textContent = `Tab ${i + 1}`;
+                sidebar.appendChild(tab);
+            }
+            window.addEventListener('scroll', handleScroll);
+        }, 100); // 延迟确保商品列表渲染完毕后计算高度
     };
 
 
-        // 生成商品列表
-        // window.onload = function() {
-        //     const productList = document.getElementById('product-list');
-            
-        //     products.forEach((product, index) => {
-        //         const article = document.createElement('article');
-        //         article.className = 'product';
 
-        //         article.innerHTML = `
-        //             <h2 class="product-name">${product.name}</h2>
-        //             <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
-        //             <p class="product-price">${product.price}</p>
-        //             <button onclick="showDetails(${index})">查看详情</button>
-        //         `;
-                
-        //         productList.appendChild(article);
-        //     });
-        // };
-        
-
-        // 点击查看详情，显示详细信息
-        // function showDetails(index) {
-        //     const product = products[index];
-        //     document.getElementById('details-name').innerText = product.name;
-        //     document.getElementById('details-image').src = product.image;
-        //     document.getElementById('details-description').innerText = product.description;
-        //     document.getElementById('details-price').innerText = product.price;
-
-        //     document.getElementById('product-list').style.display = 'none'; // 隐藏商品列表
-        //     document.getElementById('product-details').style.display = 'block'; // 显示商品详情
-        // }
         function showDetails(index){
             window.location.href='website.html?product=${index}';
         }
 
-        // 返回商品列表
         function goBack() {
             document.getElementById('product-list').style.display = 'block';
             document.getElementById('product-details').style.display = 'none';
