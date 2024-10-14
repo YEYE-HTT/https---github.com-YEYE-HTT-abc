@@ -61,7 +61,7 @@
 
     <!-- Top Sales 区域 -->
 
-    <section id="top-sales">
+    <!-- <section id="top-sales">
         <h2>Top Sales / Top Commission</h2>
     
         <div class="top-sales-item">
@@ -77,8 +77,17 @@
                 <p class="top-sales-price">$250</p>
             </div>
         </div>
-    </section>
-    
+    </section> -->
+
+        <div class="top-section">
+            <h2>Top Sales</h2>
+            <div class="top-label">
+            <!-- <h2>Top Sales</h2> -->
+            </div>
+            <div id="top-sales" class="sales-container">
+            </div>
+        </div>
+        
 
     <div id="layout">
         <nav id="sidebar"></nav>
@@ -103,49 +112,118 @@
             { name: "Small box5", image: "1.jpg", description: "这是商品5的详细描述。", price: "$200" },
             { name: "Small box6", image: "2.jpg", description: "这是商品6的详细描述。", price: "$400" }
         ];
-    window.onload = function() {
-        const productList = document.getElementById('product-list');
-        const sidebar=document.getElementById('sidebar');
+    // window.onload = function() {
+    //     const productList = document.getElementById('product-list');
+    //     const sidebar=document.getElementById('sidebar');
 
-        const categoryNote = document.createElement('h2');
-        categoryNote.textContent = "类目"; 
-        categoryNote.style.textAlign = 'center';  
-        categoryNote.style.marginBottom = '20px'; 
-        sidebar.appendChild(categoryNote);
+    //     const categoryNote = document.createElement('h2');
+    //     categoryNote.textContent = "类目"; 
+    //     categoryNote.style.textAlign = 'center';  
+    //     categoryNote.style.marginBottom = '20px'; 
+    //     sidebar.appendChild(categoryNote);
         
-        products.forEach((product, index) => {
-            const article = document.createElement('article');
-            article.className = 'product';
+    //     products.forEach((product, index) => {
+    //         const article = document.createElement('article');
+    //         article.className = 'product';
 
-            article.innerHTML = `
-                <h2 class="product-name">${product.name}</h2>
-                <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
-                <p class="product-price">${product.price}</p>
-                <a href="details.html?product=${index}"><button>查看详情</button></a>
-            `;
+    //         article.innerHTML = `
+    //             <h2 class="product-name">${product.name}</h2>
+    //             <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
+    //             <p class="product-price">${product.price}</p>
+    //             <a href="details.html?product=${index}"><button>查看详情</button></a>
+    //         `;
             
-            productList.appendChild(article);
-        });
-        setTimeout(() => {
-            const productListHeight = productList.offsetHeight;
-            console.log('Product list total height:', productListHeight);
+    //         productList.appendChild(article);
+    //     });
+    //     setTimeout(() => {
+    //         const productListHeight = productList.offsetHeight;
+    //         console.log('Product list total height:', productListHeight);
 
-            // 每个 Tab 对应 100px 的高度
-            const tabHeight = 100;
-            const numberOfTabs = Math.ceil(productListHeight / tabHeight);
-            console.log('Number of tabs to generate:', numberOfTabs);
+    //         const tabHeight = 100;
+    //         const numberOfTabs =15;
+    //         console.log('Number of tabs to generate:', numberOfTabs);
 
-            // 生成对应数量的 Tab
-            for (let i = 0; i < numberOfTabs; i++) {
-                const tab = document.createElement('a');
-                tab.className = 'tab';
-                tab.href = `#tab${i}`;
-                tab.textContent = `Tab ${i + 1}`;
-                sidebar.appendChild(tab);
-            }
-            window.addEventListener('scroll', handleScroll);
-        }, 100); // 延迟确保商品列表渲染完毕后计算高度
-    };
+
+    //         for (let i = 0; i < numberOfTabs; i++) {
+    //             const tab = document.createElement('a');
+    //             tab.className = 'tab';
+    //             tab.href = `#tab${i}`;
+    //             tab.textContent = `Tab ${i + 1}`;
+    //             sidebar.appendChild(tab);
+    //         }
+    //         window.addEventListener('scroll', handleScroll);
+    // });
+    window.onload = function() {
+    const productList = document.getElementById('product-list');
+    const sidebar = document.getElementById('sidebar');
+    const topSales = document.getElementById('top-sales'); // 获取 Top Sales 容器
+
+    const categoryNote = document.createElement('h2');
+    categoryNote.textContent = "类目"; 
+    categoryNote.style.textAlign = 'center';  
+    categoryNote.style.marginBottom = '20px'; 
+    sidebar.appendChild(categoryNote);
+
+    // 遍历产品列表并在产品区域显示
+    products.forEach((product, index) => {
+        const article = document.createElement('article');
+        article.className = 'product';
+
+        article.innerHTML = `
+            <h2 class="product-name">${product.name}</h2>
+            <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
+            <p class="product-price">${product.price}</p>
+            <a href="details.html?product=${index}"><button>查看详情</button></a>
+        `;
+        productList.appendChild(article);
+    });
+
+    // 遍历产品列表并在 Top Sales 区域显示滚动商品
+    products.forEach((product, index) => {
+        const saleItem = document.createElement('div');
+        saleItem.className = 'sale-item';
+        saleItem.innerHTML = `
+            <h2 class="product-name">${product.name}</h2>
+            <img src="${product.image}" alt="${product.name}图片" width="100" height="50">
+            <p class="product-price">${product.price}</p>
+        `;
+        topSales.appendChild(saleItem); // 插入到滚动区域
+    });
+
+    // 动态生成侧边栏的 Tab 列表
+    setTimeout(() => {
+        const productListHeight = productList.offsetHeight;
+        console.log('Product list total height:', productListHeight);
+
+        const tabHeight = 100;
+        const numberOfTabs = 15;
+        console.log('Number of tabs to generate:', numberOfTabs);
+
+        for (let i = 0; i < numberOfTabs; i++) {
+            const tab = document.createElement('a');
+            tab.className = 'tab';
+            tab.href = `#tab${i}`;
+            tab.textContent = `Tab ${i + 1}`;
+            sidebar.appendChild(tab);
+        }
+
+        window.addEventListener('scroll', handleScroll);
+    }, 100); // 延迟确保商品列表渲染完毕后计算高度
+};
+
+    // 获取所有的 sale-item 元素
+    const saleItems = document.querySelectorAll('.sale-item');
+
+    // 当鼠标移到 sale-item 上时暂停动画
+    saleItems.forEach(item => {
+    item.addEventListener('mouseover', () => {
+        item.style.animationPlayState = 'paused'; // 暂停动画
+    });
+
+    item.addEventListener('mouseout', () => {
+        item.style.animationPlayState = 'running'; // 继续动画
+    });
+    });
 
 
 
