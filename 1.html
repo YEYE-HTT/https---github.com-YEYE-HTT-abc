@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping!</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/1c4b2b8f9d.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header id='banner'>
+        <img src="4.png" id='logo'>
+        <nav id='menu'>
+            <a href="#" class="singleMenu selected">Home</a>
+            <a href="#" class="singleMenu">Women</a>
+            <a href="#" class="singleMenu">Men</a>
+            <a href="#" class="singleMenu">Contact</a>
+        </nav>
+        <a href="#" id="trigger-modal">Register</a>
+    </header>
+
+    <main id='main'>
+        <section id="product-list"></section>
+    </main>
+
+    <script>
+        // 动态获取商品数据并渲染
+        fetch('/api/products')
+            .then(response => response.json())
+            .then(products => {
+                const productList = document.getElementById('product-list');
+
+                products.forEach((product, index) => {
+                    const article = document.createElement('article');
+                    article.className = 'product';
+
+                    // 动态生成商品卡片内容，包括多个按钮
+                    article.innerHTML = `
+                        <h2 class="product-name">${product.name}</h2>
+                        <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
+                        <p class="product-price">${product.price}</p>
+                        <div class="product-buttons">
+                            <button class="buy-button" data-id="${index}">Buy Now</button>
+                            <button class="cart-button" data-id="${index}">Add to Cart</button>
+                            <button class="like-button" data-id="${index}"><i class="fa-solid fa-heart"></i> Like</button>
+                        </div>
+                    `;
+                    productList.appendChild(article);
+                });
+
+                // 为每个按钮绑定事件监听器
+                document.querySelectorAll('.buy-button').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const productId = event.target.dataset.id;
+                        alert(`Buying product with ID: ${productId}`);
+                        // 可以在这里调用后端 API 进行购买逻辑
+                    });
+                });
+
+                document.querySelectorAll('.cart-button').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const productId = event.target.dataset.id;
+                        alert(`Added product ${productId} to cart.`);
+                        // 在这里实现加入购物车逻辑
+                    });
+                });
+
+                document.querySelectorAll('.like-button').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const productId = event.target.dataset.id;
+                        event.target.classList.toggle('liked');
+                        alert(`Liked product ${productId}.`);
+                        // 实现喜欢商品的逻辑
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    </script>
+
+</body>
+
+</html>

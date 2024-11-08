@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+</head>
+<body>
+
+    <h1>Product Details</h1>
+    <div id="product-detail"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const productIndex = urlParams.get('product') || '0'; // 默认值
+
+        const products = [
+            { name: "Small box1", image: "1.jpg", description: "这是商品1的详细描述。", price: "$100" },
+            { name: "Small box2", image: "./images/2.jpg", description: "这是商品2的详细描述。", price: "$150" },
+            { name: "Small box3", image: "./images/3.jpg", description: "这是商品3的详细描述。", price: "$200" },
+            { name: "Small box4", image: "./images/4.jpg", description: "这是商品4的详细描述。", price: "$400" },
+            { name: "Small box5", image: "./images/1.jpg", description: "这是商品5的详细描述。", price: "$200" },
+            { name: "Small box6", image: "./images/2.jpg", description: "这是商品6的详细描述。", price: "$400" }
+        ];
+
+        const index = parseInt(productIndex, 10);
+
+        if (isNaN(index) || index < 0 || index >= products.length) {
+            document.getElementById('product-detail').innerHTML = '<p>Product not found.</p>';
+        } else {
+            const product = products[index];
+            document.getElementById('product-detail').innerHTML = `
+                <h2>${product.name}</h2>
+                <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
+                <p>Price: ${product.price}</p>
+                <p>Description: ${product.description}</p>
+            `;
+        }
+
+    </script>
+
+</body>
+</html>

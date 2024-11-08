@@ -1,0 +1,414 @@
+/* 页面基础样式 */
+body,html {
+    font-family:'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    height:100%;
+    background-color:#f5f5f5;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #a3a300;
+    color: white;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+/* Header 样式 */
+/* header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #a3a33a;
+    color: white;
+} */
+
+#logo {
+    height: 50px;
+}
+
+/* nav {
+    display: flex;
+    gap: 15px;
+} */
+
+
+
+
+
+.singleMenu {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.singleMenu:hover {
+    text-decoration: underline;
+}
+
+/* 内容区域样式 */
+/* #details {
+    margin-top: 20px;
+    text-align: center;
+} */
+
+#details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    margin: auto;
+}
+
+
+
+
+
+
+#product-layout {
+    display: flex;
+    justify-content: center; /* 水平方向居中 */
+    align-items: center; /* 垂直方向靠上对齐 */
+    gap: 0px; /* 控制图片和价格框之间的距离 */
+    padding: 20px 0; /* 控制顶部和底部的内边距 */
+}
+
+
+
+
+.content-section {
+    flex: 1; /* 按钮部分占一定比例 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.thumbnail-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+
+
+.image-section {
+    flex:1;
+    display: flex;
+    flex-direction: column; /* 图片和缩略图垂直排列 */
+    margin-left:auto;
+    align-items: center;
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #00bb2d;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+.image-container h2 {
+    margin-bottom: 10px; /* 标题与图片之间的间距 */
+    text-align: center; /* 标题居中对齐 */
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+
+.info-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* 控制按钮之间的间距 */
+}
+
+/* 小图片样式 */
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover; /* 确保小图片按比例缩放 */
+    border: 2px solid transparent;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.thumbnail:hover {
+    border-color: #00bb2d;
+}
+
+
+
+
+#info-section{
+    display:flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    gap:15px;
+
+}
+
+/* .price-box {
+    display: flex;
+    grid-template-columns: 1fr 2px 1fr; 
+    gap:10px;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #9e9b17;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-top: 10px;
+} */
+.price-box {
+    display: flex;
+    grid-template-columns: 1fr 2px 1fr; 
+    gap:10px;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #9e9b17;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-top: 10px;
+}
+.price-button {
+    padding: 10px 20px;
+    background-color: #acca34;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%; /* 使按钮在各自的格子内居中 */
+}
+.price-button:hover {
+    background-color: #799807;
+}
+
+
+.divider{
+    width:2px;
+    height:80%;
+    background-color: #a8b81e;
+    align-self: center;
+}
+
+.price-display {
+    margin-top: 20px;
+    padding: 15px;
+    width: 300px;
+    text-align: center;
+    border: 2px dashed #00bb2d;
+    border-radius: 10px;
+    background-color: #fff;
+    font-size: 20px;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 返回按钮 */
+button {
+    padding: 10px 20px;
+    background-color: #add236c1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #cbc769;
+}
+
+#related-products {
+    margin-top: 30px;
+}
+
+#related-products h3 {
+    margin-bottom: 10px;
+}
+
+#related-products ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#related-products li {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+
+/* 弹窗遮罩层 */
+.modal {
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 背景半透明 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 弹窗内容样式 */
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 90%; /* 在小屏幕时自适应 */
+    text-align: center;
+    position: relative;
+}
+
+/* 关闭按钮样式 */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: red;
+    cursor: pointer;
+}
+
+/* 表单输入样式 */
+.formLabel {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.formInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* 提交按钮样式 */
+.formButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.formButton:hover {
+    background-color: #45a049;
+}
+
+
+
+.shipping-time-display {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Add to My Page 按钮样式 */
+.formButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.formButton:hover {
+    background-color: #1976D2;
+}
+
+/* 模拟购物车显示区域样式 */
+.my-page {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.my-page h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.my-page ul {
+    list-style: none;
+    padding: 0;
+}
+
+
+
+/* Description 区域样式 */
+.description-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.description-section h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.description-section p {
+    font-size: 18px;
+    color: #555;
+}
