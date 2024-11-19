@@ -7,11 +7,9 @@
     <title>商品详情</title>
     <link rel="stylesheet" href="details.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
-
     <!-- 页面顶部导航 -->
     <header>
         <img src="4.png" id="logo" alt="Logo">
@@ -26,49 +24,30 @@
     <main id="product-layout">
         <div class="image-section">
             <div class="image-container">
-                <h2 id="details-name" class="overlay-title"></h2> 
+                <h2 id="details-name" class="overlay-title"></h2>
                 <img id="details-image" src="" alt="商品图片">
-
             </div>
-                    <div class="thumbnail-container1">
-                    <img src="1.jpg" alt="小图片1" class="thumbnail" onclick="changeImage(this)">
-                    <img src="2.jpg" alt="小图片2" class="thumbnail" onclick="changeImage(this)">
-                    <img src="3.jpg" alt="小图片3" class="thumbnail" onclick="changeImage(this)">
-                    <img src="4.jpg" alt="小图片4" class="thumbnail" onclick="changeImage(this)">
-                    <img src="a.jpg" alt="小图片5" class="thumbnail" onclick="changeImage(this)">
-                </div>
         </div>
-    
-        <!-- 新增容器将图片和按钮部分包裹在一起 -->
+
         <div class="info-section">
             <div class="price-box">
-                <button class="price-button" id="sell-price-button" onclick="togglePrice('sellPrice', this)">Sell Price</button>
+                <button class="price-button" id="sell-price-button">Sell Price</button>
                 <div class="divider"></div>
-                <button class="price-button" id="commission-price-button" onclick="togglePrice('commissionPrice', this)">Commission Price</button>
-            </div>
-
-            <div class="thumbnail-container">
-                <img src="1.jpg" alt="小图片1" class="thumbnail" onclick="changeImage(this)">
-                <img src="2.jpg" alt="小图片2" class="thumbnail" onclick="changeImage(this)">
-                <img src="3.jpg" alt="小图片3" class="thumbnail" onclick="changeImage(this)">
-                <img src="4.jpg" alt="小图片4" class="thumbnail" onclick="changeImage(this)">
-                <img src="a.jpg" alt="小图片5" class="thumbnail" onclick="changeImage(this)">
+                <button class="price-button" id="commission-price-button">Commission Price</button>
             </div>
 
             <div class="shipping-info">
                 <button id="trigger-country-modal" class="shipping-button">Country</button>
                 <button class="shipping-button" id="shipping-time-button" onclick="showShippingTime()">Shipping Time</button>
                 <button id="addToMyPageButton" class="formButton">Add to My Page</button>
-
             </div>
             <div id="myPage" class="my-page">
                 <h3>My Page</h3>
                 <ul id="myPageList"></ul>
             </div>
-            <p id="shippingTimeDisplay" class="shipping-time-display"></p>
-            <button onclick="goBack()">返回</button>
         </div>
     </main>
+
     <section id="description-section" class="description-section">
         <h3>Description</h3>
         <p id="product-description">Product description will be displayed here.</p>
@@ -92,119 +71,43 @@
             </form>
         </div>
     </div>
-    
-    <!-- 显示选中的国家 -->
-    <p id="selectedCountryDisplay"></p>
-
 
     <script>
-
-        const products = [
-            { name: "Small box1", image: "1.jpg", description: "这是商品1的详细描述。",sellPrice: "$100", commissionPrice: "$10" ,shippingTime: "around 10 days "},
-            { name: "Small box2", image: "2.jpg", description: "这是商品2的详细描述。",sellPrice: "$150", commissionPrice: "$15",shippingTime: "around 7days "},
-            { name: "Small box3", image: "3.jpg", description: "这是商品3的详细描述。",sellPrice: "$200", commissionPrice: "$20" ,shippingTime: "around 3 days "},
-            { name: "Small box4", image: "4.jpg", description: "这是商品4的详细描述。",sellPrice: "$400", commissionPrice: "$40"  ,shippingTime: "around 2 days "},
-            { name: "Small box5", image: "1.jpg", description: "这是商品5的详细描述。",sellPrice: "$200", commissionPrice: "$20",shippingTime: "around 11 days "  },
-            { name: "Small box6", image: "2.jpg", description: "这是商品6的详细描述。",sellPrice: "$100", commissionPrice: "$10" ,shippingTime: "around 20 days "}
-        ];
-
         // 获取 URL 参数
         const urlParams = new URLSearchParams(window.location.search);
-        const productIndex = urlParams.get('product'); // 获取 product 参数
+        const name = urlParams.get('name');
+        const image = urlParams.get('image');
+        const description = urlParams.get('description');
+        const price = urlParams.get('price');
 
-        // 获取对应商品信息
-        const product = products[productIndex];
+        // 填充商品信息
+        if (name && image && description && price) {
+            document.getElementById('details-name').textContent = name;
+            document.getElementById('details-image').src = image;
+            document.getElementById('product-description').textContent = description;
 
-        // 如果找到商品，则展示详情
-        if (product) {
-            document.getElementById('details-name').innerText = product.name;
-            document.getElementById('details-image').src = product.image;
-
-            const sellPriceButton = document.getElementById('sell-price-button');
-            const commissionPriceButton = document.getElementById('commission-price-button');
-            const shippingTimeButton = document.getElementById('shipping-time-button'); // 获取 Shipping Time 按钮
-
-
-            sellPriceButton.setAttribute('data-price', product.sellPrice);
-            sellPriceButton.setAttribute('data-default', 'Sell Price');
-            commissionPriceButton.setAttribute('data-price', product.commissionPrice);
-            commissionPriceButton.setAttribute('data-default', 'Commission Price');
-
-            shippingTimeButton.textContent='Shipping Time';
-
-            document.getElementById('sell-price-button').setAttribute('data-price', product.sellPrice);
-            document.getElementById('commission-price-button').setAttribute('data-price', product.commissionPrice);
-
-            document.getElementById('product-description').textContent = product.description;
-
-            
+            document.getElementById('sell-price-button').textContent = price;
         } else {
-            document.getElementById('details-name').innerText = "商品未找到";
+            document.getElementById('details-name').textContent = "商品未找到";
+            document.getElementById('details-image').src = "";
             document.getElementById('product-description').textContent = "No description available.";
-
         }
-        
+
+        // 显示运输时间
         function showShippingTime() {
-            const shippingTimeButton = document.getElementById('shipping-time-button');
-            const currentText = shippingTimeButton.textContent; // 获取当前按钮文本
+            const button = document.getElementById('shipping-time-button');
+            button.textContent = "Shipping time will be added here"; // 示例，需替换为实际逻辑
+        }
 
-            if (currentText === 'Shipping Time') {
-                // 如果当前是初始文本，则显示商品的邮寄时间
-                shippingTimeButton.textContent = product.shippingTime || "No shipping info available.";
+        // 选择国家并提交
+        document.getElementById('submitCountry').onclick = function () {
+            const selectedCountry = document.getElementById('countrySelect').value;
+            if (selectedCountry) {
+                document.getElementById('trigger-country-modal').textContent = selectedCountry;
+                document.getElementById('country-form-ct').style.display = 'none';
             } else {
-                // 如果当前显示的是邮寄时间，则恢复为初始文本
-                shippingTimeButton.textContent = 'Shipping Time';
+                alert('Please select a country.');
             }
-        }
-
-        document.getElementById('addToMyPageButton').onclick = function () {
-            const selectedCountry = document.getElementById('trigger-country-modal').textContent;
-            const shippingTime = document.getElementById('shipping-time-button').textContent;
-
-            if (selectedCountry === 'Country' || shippingTime === 'Shipping Time') {
-                alert('Please select both a country and shipping time.');
-                return;
-            }
-
-            const myPageList = document.getElementById('myPageList');
-            const listItem = document.createElement('li');
-            listItem.textContent = `Product: ${product.name}, Country: ${selectedCountry}, Shipping Time: ${shippingTime}`;
-            myPageList.appendChild(listItem);
-        };
-
-        // 显示点击的价格
-        function togglePrice(priceType, button) {
-            const currentText = button.innerText;
-            const defaultText = button.getAttribute('data-default');
-            const price = button.getAttribute('data-price');
-
-            button.innerText = (currentText === defaultText) ? price : defaultText;
-
-
-        }
-
-        function changeImage(thumbnail){
-            const mainImage = document.getElementById('details-image');
-            mainImage.src=thumbnail.src;
-        }
-
-        function openModal(modelId){
-            document.getElementById(modalId).style.display = 'block';
-        }
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        window.onclick = function (event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-            }
-        };
-
-
-        // 打开弹窗
-        document.getElementById('trigger-country-modal').onclick = function () {
-            document.getElementById('country-form-ct').style.display = 'flex';
         };
 
         // 关闭弹窗
@@ -212,33 +115,27 @@
             document.getElementById('country-form-ct').style.display = 'none';
         };
 
-        // 点击遮罩层关闭弹窗
-        window.onclick = function (event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-            }
-        };
+        // 动态添加到 "My Page"
+        document.getElementById('addToMyPageButton').onclick = function () {
+            const selectedCountry = document.getElementById('trigger-country-modal').textContent;
+            const shippingTime = document.getElementById('shipping-time-button').textContent;
 
-        // 提交国家选择并更新按钮文字
-        document.getElementById('submitCountry').onclick = function () {
-            var selectedCountry = document.getElementById('countrySelect').value;
-            if (selectedCountry) {
-                // 在按钮上显示选中的国家
-                document.getElementById('trigger-country-modal').textContent = selectedCountry;
-                document.getElementById('country-form-ct').style.display = 'none'; // 关闭弹窗
-            } else {
+            if (!selectedCountry || selectedCountry === "Country") {
                 alert('Please select a country.');
+                return;
             }
+
+            const myPageList = document.getElementById('myPageList');
+            const listItem = document.createElement('li');
+            listItem.textContent = `${name}, ${selectedCountry}, ${shippingTime}`;
+            myPageList.appendChild(listItem);
         };
 
-
-
-        // 返回按钮功能
+        // 返回上一页
         function goBack() {
-            window.history.back(); // 返回上一页
+            window.history.back();
         }
     </script>
-
 </body>
 
 </html>

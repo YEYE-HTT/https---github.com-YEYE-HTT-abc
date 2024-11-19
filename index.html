@@ -89,158 +89,379 @@
         </div>
         
 
-    <div id="layout">
-        <nav id="sidebar"></nav>
-        <section id = "product-list"></section>
-        <section id = "product-details" style = "display:none;">
-            <h2 id = "details-name"></h2>
-            <img id = "details-image" src=""alt = "商品图片" width ="300" height ="300">
-            <p id = "details-description"></p>
-            <p id = "details-price"></p>
-            <button onclick="goBack()" >return</button>
-        </section>
 
+    <div id="layout">
+        <nav id="sidebar">
+            <!-- 侧边栏内容 -->
+            <div id="top-sales"></div> <!-- 滚动区域 -->
+        </nav>
+        <div id="main-content">
+            <section id="product-list"></section>
+            <div id="pagination"></div>
+        </div>
+        <section id="product-details" style="display:none;">
+            <h2 id="details-name"></h2>
+            <img id="details-image" src="" alt="商品图片" width="300" height="300">
+            <p id="details-description"></p>
+            <p id="details-price"></p>
+            <button onclick="goBack()">Return</button>
+        </section>
     </div>
+    
 
 
     <script>
         const products = [
-            { name: "Small box1", image: "1.jpg", description: "这是商品1的详细描述。", price: "$100" },
-            { name: "Small box2", image: "2.jpg", description: "这是商品2的详细描述。", price: "$150" },
-            { name: "Small box3", image: "3.jpg", description: "这是商品3的详细描述。", price: "$200" },
-            { name: "Small box4", image: "4.jpg", description: "这是商品4的详细描述。", price: "$400" },
-            { name: "Small box5", image: "1.jpg", description: "这是商品5的详细描述。", price: "$200" },
-            { name: "Small box6", image: "2.jpg", description: "这是商品6的详细描述。", price: "$400" }
+            { name: "Small box1", image: "1.jpg", description: "这是商品1的详细描述。", price: "$100", category: "Category 1" },
+            { name: "Small box2", image: "2.jpg", description: "这是商品2的详细描述。", price: "$150", category: "Category 1" },
+            { name: "Small box3", image: "3.jpg", description: "这是商品3的详细描述。", price: "$200", category: "Category 1" },
+            { name: "Small box4", image: "4.jpg", description: "这是商品4的详细描述。", price: "$400", category: "Category 1" },
+            { name: "Small box5", image: "1.jpg", description: "这是商品5的详细描述。", price: "$200", category: "Category 2" },
+            { name: "Small box6", image: "2.jpg", description: "这是商品6的详细描述。", price: "$400", category: "Category 2" },
+            { name: "Small box7", image: "3.jpg", description: "这是商品7的详细描述。", price: "$500", category: "Category 2" },
+            { name: "Small box8", image: "4.jpg", description: "这是商品8的详细描述。", price: "$600", category: "Category 3" },
+            { name: "Small box9", image: "1.jpg", description: "这是商品9的详细描述。", price: "$300", category: "Category 3" },
+            { name: "Small box1", image: "1.jpg", description: "这是商品1的详细描述。", price: "$100", category: "Category 1" },
+            { name: "Small box2", image: "2.jpg", description: "这是商品2的详细描述。", price: "$150", category: "Category 1" },
+            { name: "Small box3", image: "3.jpg", description: "这是商品3的详细描述。", price: "$200", category: "Category 1" },
+            { name: "Small box4", image: "4.jpg", description: "这是商品4的详细描述。", price: "$400", category: "Category 1" },
+            { name: "Small box5", image: "1.jpg", description: "这是商品5的详细描述。", price: "$200", category: "Category 2" },
+            { name: "Small box6", image: "2.jpg", description: "这是商品6的详细描述。", price: "$400", category: "Category 2" },
+            { name: "Small box7", image: "3.jpg", description: "这是商品7的详细描述。", price: "$500", category: "Category 2" },
+            { name: "Small box8", image: "4.jpg", description: "这是商品8的详细描述。", price: "$600", category: "Category 3" },
+            { name: "Small box9", image: "1.jpg", description: "这是商品9的详细描述。", price: "$300", category: "Category 3" },
         ];
-    // window.onload = function() {
-    //     const productList = document.getElementById('product-list');
-    //     const sidebar=document.getElementById('sidebar');
+    
+        const categories = ["Category 1", "Category 2", "Category 3"]; // 类目列表
+        const ITEMS_PER_PAGE = 6; // 每页显示的商品数量
+        let currentPage = 1; // 当前页码
+        let currentCategory = categories[0]; // 当前选中的类目
+    
+        window.onload = function () {
+            const sidebar = document.getElementById('sidebar');
+            const productList = document.getElementById('product-list');
+            const pagination = document.getElementById('pagination'); // 分页按钮容器
+            const topSales = document.getElementById('top-sales'); // 获取 Top Sales 容器
+    
+            // 动态生成类目
+            categories.forEach(category => {
+                const tab = document.createElement('a');
+                tab.className = 'tab';
+                tab.href = "#";
+                tab.textContent = category;
+                tab.addEventListener('click', () => {
+                    currentCategory = category; // 更新当前类目
+                    currentPage = 1; // 点击类目时重置页码到第一页
+                    displayProducts(productList, pagination);
+                });
+                sidebar.appendChild(tab);
+            });
+    
+            // 初始化显示商品
+            function displayProducts(productList, pagination) {
+                const filteredProducts = products.filter(product => product.category === currentCategory);
+                const totalItems = filteredProducts.length;
+                const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
-    //     const categoryNote = document.createElement('h2');
-    //     categoryNote.textContent = "类目"; 
-    //     categoryNote.style.textAlign = 'center';  
-    //     categoryNote.style.marginBottom = '20px'; 
-    //     sidebar.appendChild(categoryNote);
-        
-    //     products.forEach((product, index) => {
-    //         const article = document.createElement('article');
-    //         article.className = 'product';
+                // 当前页的商品
+                const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+                const endIndex = startIndex + ITEMS_PER_PAGE;
+                const productsToShow = filteredProducts.slice(startIndex, endIndex);
 
-    //         article.innerHTML = `
-    //             <h2 class="product-name">${product.name}</h2>
-    //             <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
-    //             <p class="product-price">${product.price}</p>
-    //             <a href="details.html?product=${index}"><button>查看详情</button></a>
-    //         `;
-            
-    //         productList.appendChild(article);
-    //     });
-    //     setTimeout(() => {
-    //         const productListHeight = productList.offsetHeight;
-    //         console.log('Product list total height:', productListHeight);
+                // 渲染商品列表
+                productList.innerHTML = ""; // 清空当前商品列表
+                productsToShow.forEach((product, index) => {
+                    const article = document.createElement('article');
+                    article.className = 'product';
 
-    //         const tabHeight = 100;
-    //         const numberOfTabs =15;
-    //         console.log('Number of tabs to generate:', numberOfTabs);
+                    // 创建商品卡片的 HTML
+                    article.innerHTML = `
+                        <h2 class="product-name">${product.name}</h2>
+                        <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
+                        <p class="product-price">${product.price}</p>
+                        <a href="details.html?name=${encodeURIComponent(product.name)}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description)}&price=${encodeURIComponent(product.price)}">
+                            <button>查看详情</button>
+                        </a>
+                    `;
+
+                    // 将商品卡片添加到商品列表
+                    productList.appendChild(article);
+                });
+
+                // 渲染分页
+                renderPagination(pagination, totalPages);
+            }
 
 
-    //         for (let i = 0; i < numberOfTabs; i++) {
-    //             const tab = document.createElement('a');
-    //             tab.className = 'tab';
-    //             tab.href = `#tab${i}`;
-    //             tab.textContent = `Tab ${i + 1}`;
-    //             sidebar.appendChild(tab);
-    //         }
-    //         window.addEventListener('scroll', handleScroll);
-    // });
-    window.onload = function() {
-    const productList = document.getElementById('product-list');
-    const sidebar = document.getElementById('sidebar');
-    const topSales = document.getElementById('top-sales'); // 获取 Top Sales 容器
-
-    const categoryNote = document.createElement('h2');
-    categoryNote.textContent = "类目"; 
-    categoryNote.style.textAlign = 'center';  
-    categoryNote.style.marginBottom = '20px'; 
-    sidebar.appendChild(categoryNote);
-
-    // 遍历产品列表并在产品区域显示
-    products.forEach((product, index) => {
-        const article = document.createElement('article');
-        article.className = 'product';
-
-        article.innerHTML = `
-            <h2 class="product-name">${product.name}</h2>
-            <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
-            <p class="product-price">${product.price}</p>
-            <a href="details.html?product=${index}"><button>查看详情</button></a>
-        `;
-        productList.appendChild(article);
-    });
-
-    // 遍历产品列表并在 Top Sales 区域显示滚动商品
-    products.forEach((product, index) => {
-        const saleItem = document.createElement('div');
-        saleItem.className = 'sale-item';
-        saleItem.innerHTML = `
-            <h2 class="product-name">${product.name}</h2>
-            <img src="${product.image}" alt="${product.name}图片" width="100" height="50">
-            <p class="product-price">${product.price}</p>
-        `;
-        topSales.appendChild(saleItem); // 插入到滚动区域
-    });
-
-    // 动态生成侧边栏的 Tab 列表
-    setTimeout(() => {
-        const productListHeight = productList.offsetHeight;
-        console.log('Product list total height:', productListHeight);
-
-        const tabHeight = 100;
-        const numberOfTabs = 15;
-        console.log('Number of tabs to generate:', numberOfTabs);
-
-        for (let i = 0; i < numberOfTabs; i++) {
-            const tab = document.createElement('a');
-            tab.className = 'tab';
-            tab.href = `#tab${i}`;
-            tab.textContent = `Tab ${i + 1}`;
-            sidebar.appendChild(tab);
+    
+            // 初始化 Top Sales 动画部分
+            products.forEach((product, index) => {
+                const saleItem = document.createElement('div');
+                saleItem.className = 'sale-item';
+                saleItem.innerHTML = `
+                    <h2 class="product-name">${product.name}</h2>
+                    <img src="${product.image}" alt="${product.name}图片" width="100" height="50">
+                    <p class="product-price">${product.price}</p>
+                `;
+                topSales.appendChild(saleItem); // 插入到滚动区域
+            });
+    
+            // 获取所有的 sale-item 元素
+            const saleItems = document.querySelectorAll('.sale-item');
+    
+            // 添加动画的鼠标事件
+            saleItems.forEach(item => {
+                item.addEventListener('mouseover', () => {
+                    item.style.animationPlayState = 'paused'; // 暂停动画
+                });
+    
+                item.addEventListener('mouseout', () => {
+                    item.style.animationPlayState = 'running'; // 恢复动画
+                });
+            });
+        };
+    
+        // 根据类目和页码显示商品
+        function displayProducts(productList, pagination) {
+            const filteredProducts = products.filter(product => product.category === currentCategory);
+            const totalItems = filteredProducts.length;
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    
+            // 当前页的商品
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            const endIndex = startIndex + ITEMS_PER_PAGE;
+            const productsToShow = filteredProducts.slice(startIndex, endIndex);
+    
+            // 渲染商品列表
+            productList.innerHTML = "";
+            productsToShow.forEach(product => {
+                const article = document.createElement('article');
+                article.className = 'product';
+                article.innerHTML = `
+                    <h2 class="product-name">${product.name}</h2>
+                    <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
+                    <p class="product-price">${product.price}</p>
+                    <button onclick="showDetails('${product.name}', '${product.image}', '${product.description}', '${product.price}')">查看详情</button>
+                `;
+                productList.appendChild(article);
+            });
+    
+            // 渲染分页
+            renderPagination(pagination, totalPages);
         }
-
-        window.addEventListener('scroll', handleScroll);
-    }, 100); // 延迟确保商品列表渲染完毕后计算高度
-};
-
-    // 获取所有的 sale-item 元素
-    const saleItems = document.querySelectorAll('.sale-item');
-
-    // 当鼠标移到 sale-item 上时暂停动画
-    saleItems.forEach(item => {
-    item.addEventListener('mouseover', () => {
-        item.style.animationPlayState = 'paused'; // 暂停动画
-    });
-
-    item.addEventListener('mouseout', () => {
-        item.style.animationPlayState = 'running'; // 继续动画
-    });
-    });
-
-
-
-        function showDetails(index){
-            window.location.href='website.html?product=${index}';
+    
+        // 渲染分页按钮
+        function renderPagination(pagination, totalPages) {
+            pagination.innerHTML = ""; // 清空分页区域
+    
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = i === currentPage ? 'active' : '';
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    displayProducts(document.getElementById('product-list'), pagination);
+                });
+                pagination.appendChild(pageButton);
+            }
         }
-
+    
+        // 显示商品详情
+        function showDetails(name, image, description, price) {
+            const productList = document.getElementById('product-list');
+            const productDetails = document.getElementById('product-details');
+    
+            productList.style.display = 'none';
+            productDetails.style.display = 'block';
+    
+            document.getElementById('details-name').textContent = name;
+            document.getElementById('details-image').src = image;
+            document.getElementById('details-description').textContent = description;
+            document.getElementById('details-price').textContent = price;
+        }
+    
+        // 返回商品列表
         function goBack() {
             document.getElementById('product-list').style.display = 'block';
             document.getElementById('product-details').style.display = 'none';
         }
     </script>
-
-
-
-
     
+   
+    <!-- <script>
+        const ITEMS_PER_PAGE = 6; // 每页显示的商品数量
+        let currentPage = 1; // 当前页码
+        let currentCategory = ""; // 当前选中的类目
+    
+        window.onload = function () {
+            const sidebar = document.getElementById('sidebar');
+            const productList = document.getElementById('product-list');
+            const pagination = document.getElementById('pagination'); // 分页按钮容器
+            const topSales = document.getElementById('top-sales'); // 获取 Top Sales 容器
+    
+            //  1111
+            fetch('/api/categories') 
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch categories');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const categories = data.categories; // 从后端返回的类目数据
+                    if (categories.length > 0) {
+                        currentCategory = categories[0]; // 默认选中第一个类目
+                    }
+    
+                    // 渲染侧边栏
+                    categories.forEach(category => {
+                        const tab = document.createElement('a');
+                        tab.className = 'tab';
+                        tab.href = "#";
+                        tab.textContent = category;
+                        tab.addEventListener('click', () => {
+                            currentCategory = category;
+                            currentPage = 1; // 切换类目时重置到第一页
+                            fetchProductsByCategory(currentCategory, productList, pagination);
+                        });
+                        sidebar.appendChild(tab);
+                    });
+    
+                    // 初始化默认类目商品
+                    if (currentCategory) {
+                        fetchProductsByCategory(currentCategory, productList, pagination);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching categories:', error);
+                });
+    
+            // 初始化 Top Sales 动画部分（静态数据）
+            fetchTopSales(topSales);
+        };
+    
+        // 动态获取商品数据
+        function fetchProductsByCategory(category, productList, pagination) {
+            fetch(`/api/products?category=${encodeURIComponent(category)}`) // 111111
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch products');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const products = data.products; // 从后端返回的商品数据
+                    displayProducts(products, productList, pagination);
+                })
+                .catch(error => {
+                    console.error('Error fetching products:', error);
+                });
+        }
+    
+        // 初始化 Top Sales 区域
+        function fetchTopSales(topSales) {
+            fetch('/api/top-sales') // 替换为后端实际 API 地址
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch top sales');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const products = data.products; // 从后端返回的 Top Sales 数据
+                    products.forEach((product, index) => {
+                        const saleItem = document.createElement('div');
+                        saleItem.className = 'sale-item';
+                        saleItem.innerHTML = `
+                            <h2 class="product-name">${product.name}</h2>
+                            <img src="${product.image}" alt="${product.name}图片" width="100" height="50">
+                            <p class="product-price">${product.price}</p>
+                        `;
+                        topSales.appendChild(saleItem); // 插入到滚动区域
+                    });
+    
+                    // 获取所有的 sale-item 元素
+                    const saleItems = document.querySelectorAll('.sale-item');
+    
+                    // 添加动画的鼠标事件
+                    saleItems.forEach(item => {
+                        item.addEventListener('mouseover', () => {
+                            item.style.animationPlayState = 'paused'; // 暂停动画
+                        });
+    
+                        item.addEventListener('mouseout', () => {
+                            item.style.animationPlayState = 'running'; // 恢复动画
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching top sales:', error);
+                });
+        }
+    
+        // 显示商品数据
+        function displayProducts(products, productList, pagination) {
+            const totalItems = products.length;
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            const endIndex = startIndex + ITEMS_PER_PAGE;
+            const productsToShow = products.slice(startIndex, endIndex);
+    
+            // 渲染商品列表
+            productList.innerHTML = "";
+            productsToShow.forEach(product => {
+                const article = document.createElement('article');
+                article.className = 'product';
+                article.innerHTML = `
+                    <h2 class="product-name">${product.name}</h2>
+                    <img src="${product.image}" alt="${product.name}图片" width="200" height="100">
+                    <p class="product-price">${product.price}</p>
+                    <button onclick="showDetails('${product.name}', '${product.image}', '${product.description}', '${product.price}')">查看详情</button>
+                `;
+                productList.appendChild(article);
+            });
+    
+            // 渲染分页按钮
+            renderPagination(products, totalPages, productList, pagination);
+        }
+    
+        // 渲染分页按钮
+        function renderPagination(products, totalPages, productList, pagination) {
+            pagination.innerHTML = "";
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = i === currentPage ? 'active' : '';
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    displayProducts(products, productList, pagination);
+                });
+                pagination.appendChild(pageButton);
+            }
+        }
+    
+        // 显示商品详情
+        function showDetails(name, image, description, price) {
+            const productList = document.getElementById('product-list');
+            const productDetails = document.getElementById('product-details');
+    
+            productList.style.display = 'none';
+            productDetails.style.display = 'block';
+    
+            document.getElementById('details-name').textContent = name;
+            document.getElementById('details-image').src = image;
+            document.getElementById('details-description').textContent = description;
+            document.getElementById('details-price').textContent = price;
+        }
+    
+        // 返回商品列表
+        function goBack() {
+            document.getElementById('product-list').style.display = 'block';
+            document.getElementById('product-details').style.display = 'none';
+        }
+    </script>
+     -->
 
     <a href="#" id="helpFile">?</a>
 

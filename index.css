@@ -164,11 +164,40 @@ body {
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
-} */
+}
+
+
 
 /* 悬停时 Top Sales 链接的样式 */
-.top-sales-link:hover {
+/* .top-sales-link:hover {
     background-color: #d35400;
+} */ */
+
+
+
+
+#top-sales {
+    width: 100%;
+    overflow: hidden; /* 隐藏滚动内容溢出 */
+    height: 150px; /* 设置滚动区域高度 */
+    position: relative;
+    background: #f8f8f8;
+}
+
+.sale-item {
+    display: inline-block;
+    width: 200px; /* 每个滚动项的宽度 */
+    margin: 0 10px;
+    animation: scroll 10s linear infinite; /* 定义滚动动画 */
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(100%); /* 从右边开始 */
+    }
+    100% {
+        transform: translateX(-100%); /* 滚动到左边消失 */
+    }
 }
 
 .right-content {
@@ -216,6 +245,44 @@ body {
     margin-right: 25px;
 }
 
+
+/* 主内容区域 */
+#main-content {
+    display: flex;
+    flex-direction: column; /* 纵向排列商品列表和分页 */
+    flex-grow: 1; /* 自适应剩余空间 */
+}
+
+/* 商品列表 */
+#product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 每行显示3个商品 */
+    gap: 20px; /* 商品间距 */
+    padding: 20px;
+}
+
+#pagination {
+    margin-top: 20px; /* 距离商品列表的上边距 */
+    text-align: center; /* 按钮内容居中 */
+}
+
+#pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #e67e22;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#pagination button.active {
+    background-color: #d35400;
+}
+
+#pagination button:hover {
+    background-color: #f39c12;
+}
 
 
 
